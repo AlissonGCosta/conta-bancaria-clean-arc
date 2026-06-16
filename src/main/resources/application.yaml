@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: conta-bancaria-clean-arc
