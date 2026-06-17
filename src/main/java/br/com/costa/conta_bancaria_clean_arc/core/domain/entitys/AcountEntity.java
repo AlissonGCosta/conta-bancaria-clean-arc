@@ -1,4 +1,4 @@
-package br.com.costa.conta_bancaria_clean_arc.domain.entitys;
+package br.com.costa.conta_bancaria_clean_arc.core.domain.entitys;
 
 import java.math.BigDecimal;
 import java.util.UUID;
