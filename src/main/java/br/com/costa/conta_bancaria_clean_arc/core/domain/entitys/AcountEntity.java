@@ -53,7 +53,6 @@ public class AcountEntity {
     }
 
     public AcountEntity(String name, String taxNumber, String password, BigDecimal amount) {
-        this.id = UUID.randomUUID();
         this.name = name;
         this.taxNumber = taxNumber;
         this.password = password;

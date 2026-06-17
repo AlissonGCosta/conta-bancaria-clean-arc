@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
-@Table
+@Table(name = "accounts")
 @Getter
 @Setter
 @Builder
