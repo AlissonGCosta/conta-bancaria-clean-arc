@@ -8,4 +8,5 @@ import java.util.UUID;
 public interface AcountJpaEntityRepository extends JpaRepository<AcountJpaEntity, UUID> {
 
     boolean existsByTaxNumber(String taxNumber);
+
 }

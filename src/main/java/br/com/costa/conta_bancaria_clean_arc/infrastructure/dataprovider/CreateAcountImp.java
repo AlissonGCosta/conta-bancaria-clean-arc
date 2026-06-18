@@ -16,12 +16,13 @@ public class CreateAcountImp implements CreateAcountInterface {
 
 
     @Override
-    public Boolean createAcount(AcountEntity account) {
-
-        if (repository.existsByTaxNumber(account.getTaxNumber())) {
-            return false;
-        }
+    public void createAcount(AcountEntity account) {
         repository.save(mapper.toJpaEntity(account));
-        return true;
+
+    }
+
+    @Override
+    public Boolean existsByTaxNumber(String taxNumber) {
+        return repository.existsByTaxNumber(taxNumber);
     }
 }
