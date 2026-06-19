@@ -6,9 +6,12 @@ import br.com.costa.conta_bancaria_clean_arc.infrastructure.persistence.entity.A
 import br.com.costa.conta_bancaria_clean_arc.infrastructure.persistence.entity.mapper.AcountMapper;
 import br.com.costa.conta_bancaria_clean_arc.infrastructure.persistence.repository.AcountJpaEntityRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
+@Component
 @RequiredArgsConstructor
 public class TransfairImpl implements TransfairInterface {
 
@@ -16,10 +19,10 @@ public class TransfairImpl implements TransfairInterface {
     private final AcountMapper mapper;
 
     @Override
-    public void transfairAmount(String toAccount, String fromAccount) {
+    public void transfairAmount(AcountEntity toAccount, AcountEntity fromAccount) {
 
-        repository.save();
-        repository.save();
+        repository.save(mapper.toJpaEntity(toAccount));
+        repository.save(mapper.toJpaEntity(fromAccount));
 
     }
 

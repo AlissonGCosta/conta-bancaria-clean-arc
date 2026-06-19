@@ -10,8 +10,6 @@ public class CreateAcount  {
 
     private final CreateAcountInterface createAcountInterface;
 
-
-
     public CreateAcount(CreateAcountInterface createAcountInterface) {
         this.createAcountInterface = createAcountInterface;
 

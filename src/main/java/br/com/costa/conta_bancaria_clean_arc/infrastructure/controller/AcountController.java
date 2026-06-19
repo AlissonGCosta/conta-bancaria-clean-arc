@@ -34,7 +34,9 @@ public class AcountController {
     @ResponseStatus(HttpStatus.OK)
     AcountAmountResponse transferAccount(@PathVariable String txNumberToAcount, @PathVariable String txNumberFromAcount, @RequestBody AcountRequestAmount accountRequestAmount ) {
 
-        transfairUseCase.TransfairUseCase(txNumberToAcount, txNumberFromAcount);
+
+
+        transfairUseCase.TransfairUseCase(txNumberToAcount, txNumberFromAcount,   accountRequestAmount.getAmount());
 
         return acountMapper.toResponseAmountEntity(accountRequestAmount);
     }

@@ -7,6 +7,9 @@ public enum ErrorCodeEnum {
 
     AM0001("Negative Amount not possible", "AM-0001"),
 
+    TRA001("Transfer not possible for same accounts", "TRA-001"),
+    TRA002("Transfer is not possible with negatives value", "TRA-002"),
+
 
     ;
 
