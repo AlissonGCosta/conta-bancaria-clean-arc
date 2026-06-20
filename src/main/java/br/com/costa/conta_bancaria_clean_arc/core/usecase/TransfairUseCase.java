@@ -12,14 +12,20 @@ import java.math.BigDecimal;
 
 public class TransfairUseCase {
 
+    // chamando a interface
     private final TransfairInterface transfairInterface;
 
     public TransfairUseCase(TransfairInterface transfairInterface) {
         this.transfairInterface = transfairInterface;
     }
 
-    public void transfairUseCase(String txNumberFromAccount, String txNumberToAccount, BigDecimal amount) {
 
+    //metodo para transferencia
+
+    public void transfairUseCase(String txNumberToAccount, String txNumberFromAccount, BigDecimal amount) {
+
+
+        // buscando no repositorio
         var fromAccount = transfairInterface.findByTaxNumber(txNumberFromAccount)
                .orElseThrow(
                        ()-> new NotFoundException(ErrorCodeEnum.ON0003.getMessage(), ErrorCodeEnum.ON0003.getCode())
@@ -30,17 +36,20 @@ public class TransfairUseCase {
                        ()-> new NotFoundException(ErrorCodeEnum.ON0003.getMessage(), ErrorCodeEnum.ON0003.getCode())
                );
 
+        // comparando os inputs
+        if (fromAccount.equals(toAccount) || toAccount.equals(fromAccount)) {
+            throw new ConflictException(ErrorCodeEnum.TRA001.getMessage(),  ErrorCodeEnum.TRA001.getCode());
+        }
+
         var toEntity =  transfairInterface.toEntity(toAccount);
         var fromEntity =  transfairInterface.toEntity(fromAccount);
 
+        // comparando as entidades
         if (toEntity.equals(fromEntity) || fromEntity.equals(toEntity)) {
             throw new ConflictException(ErrorCodeEnum.TRA001.getMessage(),  ErrorCodeEnum.TRA001.getCode());
         }
 
-        if (amount == null||amount.compareTo(BigDecimal.ZERO)<0) {
-            throw new BadRequestException(ErrorCodeEnum.TRA002.getMessage(),  ErrorCodeEnum.TRA002.getCode());
-        }
-
+        // fazendo a ação de adcionar e subtrair
          toEntity.setAmount(toEntity.getAmount().subtract(amount));
          fromEntity.setAmount(fromEntity.getAmount().add(amount));
 
