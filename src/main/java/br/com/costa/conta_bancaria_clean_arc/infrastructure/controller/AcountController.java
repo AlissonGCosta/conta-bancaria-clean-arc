@@ -30,13 +30,13 @@ public class AcountController {
 
     }
 
-    @PatchMapping("/{txNumberToAcount}/{txFromAcount}/transfer")
+    @PatchMapping("transfer/{txNumberFromAccount}/{txNumberToAccount}")
     @ResponseStatus(HttpStatus.OK)
-    AcountAmountResponse transferAccount(@PathVariable String txNumberToAcount, @PathVariable String txNumberFromAcount, @RequestBody AcountRequestAmount accountRequestAmount ) {
+    AcountAmountResponse transferAccount(@PathVariable String txNumberFromAccount, @PathVariable String txNumberToAccount, @RequestBody AcountRequestAmount accountRequestAmount ) {
 
 
 
-        transfairUseCase.TransfairUseCase(txNumberToAcount, txNumberFromAcount,   accountRequestAmount.getAmount());
+        transfairUseCase.transfairUseCase(txNumberFromAccount, txNumberToAccount,   accountRequestAmount.getAmount());
 
         return acountMapper.toResponseAmountEntity(accountRequestAmount);
     }

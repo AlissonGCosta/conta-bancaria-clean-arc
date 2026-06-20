@@ -3,6 +3,7 @@ package br.com.costa.conta_bancaria_clean_arc.core.usecase;
 import br.com.costa.conta_bancaria_clean_arc.core.domain.entitys.AcountEntity;
 import br.com.costa.conta_bancaria_clean_arc.core.domain.exceptions.BadRequestException;
 import br.com.costa.conta_bancaria_clean_arc.core.domain.exceptions.ConflictException;
+import br.com.costa.conta_bancaria_clean_arc.core.domain.exceptions.NotFoundException;
 import br.com.costa.conta_bancaria_clean_arc.core.domain.exceptions.enums.ErrorCodeEnum;
 import br.com.costa.conta_bancaria_clean_arc.core.gateway.CreateAcountInterface;
 import br.com.costa.conta_bancaria_clean_arc.core.gateway.TransfairInterface;
@@ -17,17 +18,22 @@ public class TransfairUseCase {
         this.transfairInterface = transfairInterface;
     }
 
-    public void TransfairUseCase(String txNumberToAcount, String txNumberFromAcount, BigDecimal amount) {
+    public void transfairUseCase(String txNumberFromAccount, String txNumberToAccount, BigDecimal amount) {
 
-        var toacount = transfairInterface.findByTaxNumber(txNumberToAcount)
-               .orElseThrow();
-        var fromacount = transfairInterface.findByTaxNumber(txNumberFromAcount)
-               .orElseThrow();
+        var fromAccount = transfairInterface.findByTaxNumber(txNumberFromAccount)
+               .orElseThrow(
+                       ()-> new NotFoundException(ErrorCodeEnum.ON0003.getMessage(), ErrorCodeEnum.ON0003.getCode())
+               );
 
-        var toEntity =  transfairInterface.toEntity(toacount);
-        var fromEntity =  transfairInterface.toEntity(fromacount);
+        var toAccount = transfairInterface.findByTaxNumber(txNumberToAccount)
+               .orElseThrow(
+                       ()-> new NotFoundException(ErrorCodeEnum.ON0003.getMessage(), ErrorCodeEnum.ON0003.getCode())
+               );
 
-        if (toEntity.equals(fromEntity) || fromEntity.equals(toacount)) {
+        var toEntity =  transfairInterface.toEntity(toAccount);
+        var fromEntity =  transfairInterface.toEntity(fromAccount);
+
+        if (toEntity.equals(fromEntity) || fromEntity.equals(toEntity)) {
             throw new ConflictException(ErrorCodeEnum.TRA001.getMessage(),  ErrorCodeEnum.TRA001.getCode());
         }
 
@@ -35,10 +41,10 @@ public class TransfairUseCase {
             throw new BadRequestException(ErrorCodeEnum.TRA002.getMessage(),  ErrorCodeEnum.TRA002.getCode());
         }
 
-         fromacount.getAmount().subtract(amount);
-         toacount.getAmount().add(amount);
+         toEntity.setAmount(toEntity.getAmount().subtract(amount));
+         fromEntity.setAmount(fromEntity.getAmount().add(amount));
 
 
-        transfairInterface.transfairAmount(fromEntity, toEntity );
+        transfairInterface.transfairAmount(fromEntity, toEntity);
     }
 }

@@ -8,7 +8,6 @@ import br.com.costa.conta_bancaria_clean_arc.infrastructure.persistence.reposito
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 @Component

@@ -4,11 +4,14 @@ public enum ErrorCodeEnum {
 
     ON0001("Invalid Tax Number", "ON-0001"),
     ON0002("Unavailable Tax Number", "ON-0002"),
+    ON0003("TaxNumber not found", "ON-0003"),
 
     AM0001("Negative Amount not possible", "AM-0001"),
 
     TRA001("Transfer not possible for same accounts", "TRA-001"),
     TRA002("Transfer is not possible with negatives value", "TRA-002"),
+
+
 
 
     ;

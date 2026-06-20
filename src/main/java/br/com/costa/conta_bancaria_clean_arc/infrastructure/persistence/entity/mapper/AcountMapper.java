@@ -43,13 +43,16 @@ public class AcountMapper {
    }
 
    public AcountEntity toEntity(AcountJpaEntity accountJpaEntity) {
-        return new AcountEntity(
+        var account = new AcountEntity(
                 accountJpaEntity.getName(),
                 accountJpaEntity.getTaxNumber(),
                 accountJpaEntity.getPassword(),
                 accountJpaEntity.getAmount()
         );
 
+        account.setId(accountJpaEntity.getId());
+
+        return account;
    }
 
 
